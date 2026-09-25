@@ -1,0 +1,12 @@
+name: Solar System Workflows
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/*'
+
+jobs:
+  unit-testing:
+    name: Unit Testing
+    
