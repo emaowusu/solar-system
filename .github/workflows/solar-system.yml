@@ -1,7 +1,8 @@
-name: Solar System Workflows
+name: Solar System Workflow
 
 on:
   push:
+    workflow_dispatch:
     branches:
       - main
       - 'feature/*'
@@ -9,4 +10,23 @@ on:
 jobs:
   unit-testing:
     name: Unit Testing
-    
+    runs-on: ubuntu-latest
+    env:
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Unit Tests
+        run: npm test
