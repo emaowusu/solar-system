@@ -1,0 +1,32 @@
+// Orbital elements (J2000): a = semi-major axis (AU), e = eccentricity,
+// L0 = mean longitude (deg), varpi = longitude of perihelion (deg), period in Earth days.
+const planets = [
+  { id: 'sun', name: 'Sun', type: 'G-type main-sequence star', texture: 'sunmap.jpg', radiusKm: 695700, massKg: '1.989 × 10³⁰ kg', gravity: '274 m/s²', dayLength: '25–35 Earth days', moons: 0, temperature: '5,505 °C (surface)', orbit: null,
+    description: 'The Sun holds 99.86% of the Solar System’s mass. Nuclear fusion in its core converts hydrogen into helium, radiating the energy that powers life on Earth.' },
+  { id: 'mercury', name: 'Mercury', type: 'Terrestrial planet', texture: 'mercurymap.jpg', radiusKm: 2439.7, massKg: '3.301 × 10²³ kg', gravity: '3.7 m/s²', dayLength: '58.6 Earth days', moons: 0, temperature: '167 °C (mean)',
+    orbit: { a: 0.3871, e: 0.2056, L0: 252.25, varpi: 77.46, periodDays: 87.97 },
+    description: 'The smallest planet and closest to the Sun. Its thin exosphere cannot retain heat, so temperatures swing from -180 °C at night to 430 °C by day.' },
+  { id: 'venus', name: 'Venus', type: 'Terrestrial planet', texture: 'venusmap.jpg', radiusKm: 6051.8, massKg: '4.867 × 10²⁴ kg', gravity: '8.87 m/s²', dayLength: '243 Earth days (retrograde)', moons: 0, temperature: '464 °C (surface)',
+    orbit: { a: 0.7233, e: 0.0068, L0: 181.98, varpi: 131.53, periodDays: 224.7 },
+    description: 'Wrapped in thick carbon-dioxide clouds, Venus is the hottest planet thanks to a runaway greenhouse effect. It spins backwards relative to most planets.' },
+  { id: 'earth', name: 'Earth', type: 'Terrestrial planet', texture: 'earthmap1k.jpg', radiusKm: 6371, massKg: '5.972 × 10²⁴ kg', gravity: '9.81 m/s²', dayLength: '23h 56m', moons: 1, temperature: '15 °C (mean)',
+    orbit: { a: 1.0, e: 0.0167, L0: 100.46, varpi: 102.94, periodDays: 365.256 },
+    description: 'Our home is the only known world with liquid surface water and life. About 71% of its surface is covered by oceans.' },
+  { id: 'mars', name: 'Mars', type: 'Terrestrial planet', texture: 'marsmap1k.jpg', radiusKm: 3389.5, massKg: '6.417 × 10²³ kg', gravity: '3.71 m/s²', dayLength: '24h 37m', moons: 2, temperature: '-63 °C (mean)',
+    orbit: { a: 1.5237, e: 0.0934, L0: 355.45, varpi: 336.04, periodDays: 686.98 },
+    description: 'The Red Planet is home to Olympus Mons, the tallest volcano in the Solar System, and Valles Marineris, a canyon system stretching over 4,000 km.' },
+  { id: 'jupiter', name: 'Jupiter', type: 'Gas giant', texture: 'jupitermap.jpg', radiusKm: 69911, massKg: '1.898 × 10²⁷ kg', gravity: '24.79 m/s²', dayLength: '9h 56m', moons: 95, temperature: '-110 °C (cloud tops)',
+    orbit: { a: 5.2026, e: 0.0484, L0: 34.4, varpi: 14.75, periodDays: 4332.59 },
+    description: 'The largest planet, more than twice as massive as all other planets combined. Its Great Red Spot is a storm larger than Earth that has raged for centuries.' },
+  { id: 'saturn', name: 'Saturn', type: 'Gas giant', texture: 'saturnmap.jpg', radiusKm: 58232, massKg: '5.683 × 10²⁶ kg', gravity: '10.44 m/s²', dayLength: '10h 33m', moons: 146, temperature: '-140 °C (cloud tops)', rings: true,
+    orbit: { a: 9.5549, e: 0.0542, L0: 49.94, varpi: 92.43, periodDays: 10759.22 },
+    description: 'Famous for its spectacular ring system made of ice and rock. Saturn is the least dense planet — it would float in water.' },
+  { id: 'uranus', name: 'Uranus', type: 'Ice giant', texture: 'uranusmap.jpg', radiusKm: 25362, massKg: '8.681 × 10²⁵ kg', gravity: '8.87 m/s²', dayLength: '17h 14m (retrograde)', moons: 28, temperature: '-195 °C (cloud tops)',
+    orbit: { a: 19.2184, e: 0.0472, L0: 313.23, varpi: 170.96, periodDays: 30688.5 },
+    description: 'Uranus rotates on its side with an axial tilt of 98°, likely from an ancient collision. Its methane atmosphere gives it a pale cyan color.' },
+  { id: 'neptune', name: 'Neptune', type: 'Ice giant', texture: 'neptunemap.jpg', radiusKm: 24622, massKg: '1.024 × 10²⁶ kg', gravity: '11.15 m/s²', dayLength: '16h 6m', moons: 16, temperature: '-200 °C (cloud tops)',
+    orbit: { a: 30.11, e: 0.0086, L0: 304.88, varpi: 44.97, periodDays: 60182 },
+    description: 'The most distant planet, with supersonic winds exceeding 2,000 km/h. Neptune was the first planet located through mathematical prediction.' },
+];
+
+module.exports = planets;
