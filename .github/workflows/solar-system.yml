@@ -47,17 +47,38 @@ jobs:
       - name: Setup Node.js Environment
         uses: actions/setup-node@v6
         with:
-          node_version: 22
+          node-version: 22
           cache: 'npm'
+          cache-dependency-path: |
+            frontend/package-lock.json
+            backend/package-lock.json
 
-      - name: Install Dependencies
+      - name: Install frontend Dependencies
+        working-directory: frontend
         run: npm install
 
-      - name: Run Linting
+      - name: Run frontend linting
+        working-directory: frontend
         run: npm run lint
 
-      - name: Run Unit Tests
+      - name: Run frontend Unit Tests
+        working-directory: frontend
         run: npm test
 
-      - name: Run Build
+      - name: Run frontend Build
+        working-directory: frontend
         run: npm run build
+
+      - name: Install backend Dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Run backend Linting
+        working-directory: backend
+        run: npm run lint
+
+      - name: Run backend Unit Tests
+        working-directory: backend
+        run: npm test
+
+      
