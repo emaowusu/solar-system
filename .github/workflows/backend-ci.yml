@@ -49,25 +49,7 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
-          cache-dependency-path: |
-            frontend/package-lock.json
-            backend/package-lock.json
-
-      - name: Install frontend Dependencies
-        working-directory: frontend
-        run: npm install
-
-      - name: Run frontend linting
-        working-directory: frontend
-        run: npm run lint
-
-      - name: Run frontend Unit Tests
-        working-directory: frontend
-        run: npm test
-
-      - name: Run frontend Build
-        working-directory: frontend
-        run: npm run build
+          cache-dependency-path: backend/package-lock.json
 
       - name: Install backend Dependencies
         working-directory: backend
@@ -79,6 +61,14 @@ jobs:
 
       - name: Run backend Unit Tests
         working-directory: backend
-        run: npm test
+        run: npm test -- --coverage
+
+      - name: Upload backend test coverage
+        if: always()
+        uses: actions/upload-artifact@v7
+        with: 
+          name: backend-unit-tests-coverage
+          path: backend/coverage/
+          retension-days: 7
 
       
