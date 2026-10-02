@@ -42,7 +42,7 @@ jobs:
         with: 
           name: frontend-unit-test-coverage
           path: frontend/coverage/
-          retension-days: 7
+          retention-days: 7
 
       - name: Run frontend Build
         working-directory: frontend
