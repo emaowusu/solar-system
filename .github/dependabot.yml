@@ -1,0 +1,50 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "quarterly"
+      day: "monday"
+      time: "02:30"
+
+    open-pull-requests-limit: 2
+
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "semiannually"
+      day: "monday"
+      time: "03:00"
+    open-pull-requests-limit: 2
+    
+    # Group updates together to reduce PR spam
+    groups:
+      python-dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "docker"    
+    directory: "/backend"             
+    schedule:
+      interval: "quarterly" 
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 2
+
+  - package-ecosystem: "docker"    
+    directory: "/frontend"             
+    schedule:
+      interval: "quarterly" 
+      day: "monday"
+      time: "04:30"
+    open-pull-requests-limit: 2
+
+  - package-ecosystem: "github-actions"    
+    directory: "/"             
+    schedule:
+      interval: "cron" 
+      day: "monday"
+      time: "02:50"
+      cronjob: "0 0 1 */5 *"
+    open-pull-requests-limit: 2
