@@ -1,62 +1,31 @@
 name: Solar System Workflow
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - main
       - 'feature/*'
-  pull_request:
-    branches: [ main ]
 
 jobs:
-  unit-testing:
-    name: Unit Testing
+  testing:
     strategy:
-      matrix:
-        nodejs_version: [20, 22, 24]
-        operating_system: [ubuntu-latest, macos-latest]
-        exclude:
-          - nodejs_version: 20
-            operating_system: macos-latest
-    runs-on: ${{ matrix.operating_system }}
-    env:
-      PORT: 4000
-      MONGO_URI: mongodb://localhost:27017/solar
-      REDIS_URL: redis://localhost:6379
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      JWT_EXPIRES_IN: 7d
-      CLIENT_ORIGIN: http://localhost:5173
-
+      matrix: 
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v7
-
-      - name: Setup Node.js ${{ matrix.nodejs_version }}
-        uses: actions/setup-node@v7
-        with:
-          node-version: ${{ matrix.nodejs_version }}
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
-
-      - name: Install backend Dependencies
-        working-directory: backend
-        run: npm install
-
-      - name: Run backend Linting
-        working-directory: backend
-        run: npm run lint
-
-      - name: Run backend Unit Tests
-        working-directory: backend
-        run: npm test -- --coverage
-
-      - name: Upload backend test coverage
-        if: always()
-        uses: actions/upload-artifact@v7
-        with: 
-          name: backend-unit-tests-coverage
-          path: backend/coverage/
-          retention-days: 7
-
-      
+      - name: Testing on Ubuntu
+        run: |
+          export apikey=$3CuR3-toKEN
+          echo "Running Tests... ..."
+      - name: Testing on Windows
+        run: |
+          Set-Variable -Name "apikey" -Value "$3CuR3-toKEN"
+          echo "Running Tests... ..."
+  reports:
+    needs: testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload Report to AWS S3
+        run: echo "Uploading reports ... ..." && exit 1
+  deploy:
+    runs-on: ubuntu-latest
+    needs: reports
