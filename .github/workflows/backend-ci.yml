@@ -1,9 +1,6 @@
 name: Solar System Workflow
 
-on:
-  push:
-    branches:
-      - 'feature/*'
+on: push  
 
 jobs:
   testing:
@@ -12,20 +9,33 @@ jobs:
         os: [windows-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Testing on Ubuntu
+      - name: Linux Tests
+        if: runner.os == 'Linux'
         run: |
-          export apikey=$3CuR3-toKEN
-          echo "Running Tests... ..."
-      - name: Testing on Windows
+          export apikey='3$cuR3-tOk3N'
+          echo "Running Tests on Ubuntu..."
+      - name: Windows Tests
+        if: runner.os == 'Windows'
         run: |
-          Set-Variable -Name "apikey" -Value "$3CuR3-toKEN"
-          echo "Running Tests... ..."
+          Set-Variable -Name "apikey" -Value "3$cuR3-tOk3N"
+          echo "Running Tests on Windows..."
+
+      - name: Run unit tests only on Linux
+        if: runner.os == 'Linux'
+        run: ./run-test.sh
+
   reports:
     needs: testing
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Upload Report to AWS S3
-        run: echo "Uploading reports ... ..." && exit 1
+        run: echo "Uploading reports..." && exit 1
+
   deploy:
-    runs-on: ubuntu-latest
     needs: reports
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Production
+        run: ./deploy.sh
