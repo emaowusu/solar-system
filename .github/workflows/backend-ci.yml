@@ -1,9 +1,9 @@
 name: Solar System CI Workflow
 
-on: 
+'on':
   push:
     branches:
-      - 'feature/*'
+      - feature/*
 
 jobs:
   testing:
@@ -11,10 +11,15 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
-      matrix: 
-        node-version: [13, 14]
-        os: [macos-latest, ubuntu-latest]
-        experimental: [false]
+      matrix:
+        node-version:
+          - 14
+          - 15
+        os:
+          - macos-latest
+          - ubuntu-latest
+        experimental:
+          - false
         include:
           - node-version: 22
             os: ubuntu-latest
@@ -45,4 +50,3 @@ jobs:
           name: Backend Test Coverage
           path: backend/coverage
           retention-days: 5
-        
