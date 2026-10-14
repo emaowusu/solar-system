@@ -1,6 +1,9 @@
 name: Solar System CI Workflow
 
-on: push
+on: 
+  push:
+    branches:
+      - 'feature/*'
 
 jobs:
   code-coverage:
@@ -22,7 +25,7 @@ jobs:
       - name: Code Coverage
         continue-on-error: true
         working-directory: backend
-        run: npm run -- --coverage
+        run: npm test -- --coverage
 
       - name: Archive the coverage report
         uses: actions/upload-artifact@v6
