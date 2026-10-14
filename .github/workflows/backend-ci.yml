@@ -33,14 +33,16 @@ jobs:
         working-directory: backend
         run: npm install
 
-      - name: Test Coverage
+      - name: Test 
+        id: nodejs-unit-testing
         working-directory: backend
-        run: npm test -- --coverage
+        run: npm test 
 
-      - name: Upload Test Coverage
+      - name: Upload Test 
+        if: failure() && steps.nodejs-unit-testing.outcome == 'failure'
         uses: actions/upload-artifact@v6
         with:
           name: Backend Test Coverage
-          path: backend/coverage
+          path: backend/test
           retention-days: 5
         
