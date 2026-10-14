@@ -1,41 +1,33 @@
-name: Solar System Workflow
+name: Solar System CI Workflow
 
-on: push  
+on: push
 
 jobs:
-  testing:
-    strategy:
-      matrix: 
-        os: [windows-latest, ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Linux Tests
-        if: runner.os == 'Linux'
-        run: |
-          export apikey='3$cuR3-tOk3N'
-          echo "Running Tests on Ubuntu..."
-      - name: Windows Tests
-        if: runner.os == 'Windows'
-        run: |
-          Set-Variable -Name "apikey" -Value "3$cuR3-tOk3N"
-          echo "Running Tests on Windows..."
-
-      - name: Run unit tests only on Linux
-        if: runner.os == 'Linux'
-        run: ./run-test.sh
-
-  reports:
-    needs: testing
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - name: Upload Report to AWS S3
-        run: echo "Uploading reports..." && exit 1
-
-  deploy:
-    needs: reports
-    if: github.ref == 'refs/heads/main'
+  code-coverage:
+    name: Code Coverage
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to Production
-        run: ./deploy.sh
+      - name: Checkout the Repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js 
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Code Coverage
+        continue-on-error: true
+        working-directory: backend
+        run: npm run -- --coverage
+
+      - name: Archive the coverage report
+        uses: actions/upload-artifact@v6
+        with:
+          name: Code coverage report
+          path: coverage
+          retension-day: 5
+        
