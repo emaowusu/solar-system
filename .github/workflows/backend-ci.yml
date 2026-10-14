@@ -6,31 +6,40 @@ on:
       - 'feature/*'
 
 jobs:
-  code-coverage:
-    name: Code Coverage
-    runs-on: ubuntu-latest
+  testing:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      matrix: 
+        node-version: [13, 14]
+        os: [macos-latest, ubuntu-latest]
+        experimental: [false]
+        include:
+          - node-version: 22
+            os: ubuntu-latest
+            experimental: true
+
     steps:
       - name: Checkout the Repository
         uses: actions/checkout@v7
 
-      - name: Setup Node.js 
+      - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
+      - name: Install Dependencies
         working-directory: backend
         run: npm ci
 
-      - name: Code Coverage
-        continue-on-error: true
+      - name: Test Coverage
         working-directory: backend
         run: npm test -- --coverage
 
-      - name: Archive the coverage report
+      - name: Upload Test Coverage
         uses: actions/upload-artifact@v6
         with:
-          name: Code coverage report
+          name: Backend Test Coverage
           path: backend/coverage
-          retention-day: 5
+          retention-days: 5
         
