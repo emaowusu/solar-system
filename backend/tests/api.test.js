@@ -46,7 +46,7 @@ describe('auth', () => {
 
 describe('planets (protected)', () => {
   const login = async () => {
-    User.findOne.mockResolvedValue({ _id: 'u1', name: 'Ada', email: creds.email, passwordHash: await bcrypt.hash(creds.password, 4) });
+    // User.findOne.mockResolvedValue({ _id: 'u1', name: 'Ada', email: creds.email, passwordHash: await bcrypt.hash(creds.password, 4) });
     const res = await request(app).post('/api/auth/signin').send({ email: creds.email, password: creds.password });
     return res.body.token;
   };
