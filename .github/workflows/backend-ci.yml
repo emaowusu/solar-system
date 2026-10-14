@@ -28,6 +28,6 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: Code coverage report
-          path: coverage
-          retension-day: 5
+          path: backend/coverage
+          retention-day: 5
         
