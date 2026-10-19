@@ -12,9 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version:
-          - 14
-          - 15
+        node-version: [20, 22, 24]
         os:
           - macos-latest
           - ubuntu-latest
