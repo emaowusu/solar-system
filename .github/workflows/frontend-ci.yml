@@ -34,9 +34,9 @@ jobs:
             frontend/package-lock.json
 
       - name: Cache NPM dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v4
         with:
-          path: frontend/node_modules
+          path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashfiles('package-lock.json') }}
 
       - name: Install frontend Dependencies
