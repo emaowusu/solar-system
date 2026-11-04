@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'feature/*'
+  workflow_dispatch:
 
 jobs:
   testing:
@@ -55,3 +56,18 @@ jobs:
           name: Backend Test Coverage
           path: backend/coverage
           retention-days: 5
+
+  containerization:
+    name: containerization
+    runs-on: ubuntu-latest
+    needs: testing
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Docker Login
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    

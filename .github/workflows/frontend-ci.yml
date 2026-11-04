@@ -63,3 +63,16 @@ jobs:
         working-directory: frontend
         run: npm run build
      
+  containerization:
+    name: containerization
+    runs-on: ubuntu-latest
+    needs: unit-testing
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Docker Login
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
